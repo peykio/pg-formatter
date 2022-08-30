@@ -1,150 +1,148 @@
 // @flow
 
-import test from 'ava';
-import {
-  format,
-} from '../src';
+import test from "ava";
+import { format } from "../src";
 
-test('formats SQL', (t) => {
-  const result = format('SELECT foo FROM bar');
+test("formats SQL", (t) => {
+  const result = format("SELECT foo FROM bar");
 
-  t.is(result, 'SELECT\n    foo\nFROM\n    bar\n');
+  t.is(result, "SELECT\n    foo\nFROM\n    bar\n");
 });
 
-test('{anonymize: true}', (t) => {
-  const result = format('SELECT \'foo\' FROM \'bar\'', {
+test("{anonymize: true}", (t) => {
+  const result = format("SELECT 'foo' FROM 'bar'", {
     anonymize: true,
   });
 
-  t.not(result, 'SELECT\n    \'foo\'\nFROM\n    \'bar\'\n');
+  t.not(result, "SELECT\n    'foo'\nFROM\n    'bar'\n");
   t.regex(result, /select\s+'[^']+'\s+from\s+'[^']+'/i);
 });
 
-test('{stripComments: true} block comment', (t) => {
-  const result = format('SELECT /* foo */', {
+test("{stripComments: true} block comment", (t) => {
+  const result = format("SELECT /* foo */", {
     stripComments: true,
   });
 
-  t.is(result, 'SELECT\n');
+  t.is(result, "SELECT\n");
 });
 
-test('{stripComments: true} inline comment', (t) => {
-  const result = format('SELECT -- foo', {
+test("{stripComments: true} inline comment", (t) => {
+  const result = format("SELECT -- foo", {
     stripComments: true,
   });
 
-  t.is(result, 'SELECT\n');
+  t.is(result, "SELECT\n");
 });
 
-test('{functionCase: unchanged}', (t) => {
-  const result = format('lOwEr()', {
-    functionCase: 'unchanged',
+test("{functionCase: unchanged}", (t) => {
+  const result = format("lOwEr()", {
+    functionCase: "unchanged",
   });
 
-  t.is(result, 'lOwEr()\n');
+  t.is(result, "lOwEr()\n");
 });
 
 // @see https://github.com/darold/pgFormatter/issues/30
 // eslint-disable-next-line ava/no-skip-test
-test.skip('{functionCase: unchanged} custom function', (t) => {
-  const result = format('concat_lower_or_upper()', {
-    functionCase: 'unchanged',
+test.skip("{functionCase: unchanged} custom function", (t) => {
+  const result = format("concat_lower_or_upper()", {
+    functionCase: "unchanged",
   });
 
-  t.is(result, 'concat_lower_or_upper()\n');
+  t.is(result, "concat_lower_or_upper()\n");
 });
 
 // @see https://github.com/darold/pgFormatter/issues/30
 // eslint-disable-next-line ava/no-skip-test
-test.skip('{functionCase: unchanged} custom function with parameters', (t) => {
-  const result = format('concat_lower_or_upper(123)', {
-    functionCase: 'unchanged',
+test.skip("{functionCase: unchanged} custom function with parameters", (t) => {
+  const result = format("concat_lower_or_upper(123)", {
+    functionCase: "unchanged",
   });
 
-  t.is(result, 'concat_lower_or_upper(123)\n');
+  t.is(result, "concat_lower_or_upper(123)\n");
 });
 
-test('{functionCase: uppercase}', (t) => {
-  const result = format('lOwEr()', {
-    functionCase: 'uppercase',
+test("{functionCase: uppercase}", (t) => {
+  const result = format("lOwEr()", {
+    functionCase: "uppercase",
   });
 
-  t.is(result, 'LOWER()\n');
+  t.is(result, "LOWER()\n");
 });
 
-test('{functionCase: lowercase}', (t) => {
-  const result = format('lOwEr()', {
-    functionCase: 'lowercase',
+test("{functionCase: lowercase}", (t) => {
+  const result = format("lOwEr()", {
+    functionCase: "lowercase",
   });
 
-  t.is(result, 'lower()\n');
+  t.is(result, "lower()\n");
 });
 
-test('{functionCase: capitalize}', (t) => {
-  const result = format('lOwEr()', {
-    functionCase: 'capitalize',
+test("{functionCase: capitalize}", (t) => {
+  const result = format("lOwEr()", {
+    functionCase: "capitalize",
   });
 
-  t.is(result, 'Lower()\n');
+  t.is(result, "Lower()\n");
 });
 
-test('{keywordCase: unchanged}', (t) => {
-  const result = format('sElEcT', {
-    keywordCase: 'unchanged',
+test("{keywordCase: unchanged}", (t) => {
+  const result = format("sElEcT", {
+    keywordCase: "unchanged",
   });
 
-  t.is(result, 'sElEcT\n');
+  t.is(result, "sElEcT\n");
 });
 
-test('{keywordCase: uppercase}', (t) => {
-  const result = format('sElEcT', {
-    keywordCase: 'uppercase',
+test("{keywordCase: uppercase}", (t) => {
+  const result = format("sElEcT", {
+    keywordCase: "uppercase",
   });
 
-  t.is(result, 'SELECT\n');
+  t.is(result, "SELECT\n");
 });
 
-test('{keywordCase: lowercase}', (t) => {
-  const result = format('sElEcT', {
-    keywordCase: 'lowercase',
+test("{keywordCase: lowercase}", (t) => {
+  const result = format("sElEcT", {
+    keywordCase: "lowercase",
   });
 
-  t.is(result, 'select\n');
+  t.is(result, "select\n");
 });
 
-test('{keywordCase: capitalize}', (t) => {
-  const result = format('sElEcT', {
-    keywordCase: 'capitalize',
+test("{keywordCase: capitalize}", (t) => {
+  const result = format("sElEcT", {
+    keywordCase: "capitalize",
   });
 
-  t.is(result, 'Select\n');
+  t.is(result, "Select\n");
 });
 
-test('{spaces: 2}', (t) => {
-  const result = format('SELECT 1', {
+test("{spaces: 2}", (t) => {
+  const result = format("SELECT 1", {
     spaces: 2,
   });
 
-  t.is(result, 'SELECT\n  1\n');
+  t.is(result, "SELECT\n  1\n");
 });
 
-test('{tabs: true}', (t) => {
-  const result = format('SELECT 1', {
+test("{tabs: true}", (t) => {
+  const result = format("SELECT 1", {
     tabs: true,
   });
 
-  t.is(result, 'SELECT\n\t1\n');
+  t.is(result, "SELECT\n\t1\n");
 });
 
-test('{placeholder: <<(?:.*)?>>}', (t) => {
-  const result = format('SELECT <<foo>>', {
-    placeholder: '<<(?:.*)?>>',
+test("{placeholder: <<(?:.*)?>>}", (t) => {
+  const result = format("SELECT <<foo>>", {
+    placeholder: "<<(?:.*)?>>",
   });
 
-  t.is(result, 'SELECT\n    <<foo>>\n');
+  t.is(result, "SELECT\n    <<foo>>\n");
 });
 
-test('{noRcFile: true}', (t) => {
+test("{noRcFile: true}", (t) => {
   /* eslint-disable no-process-env, fp/no-delete */
   // pgFormatter tries to read from a default location $HOME/.pg_format, which
   // will error of HOME is not set. noRcFile prevents pgFormatter from reading
@@ -152,7 +150,7 @@ test('{noRcFile: true}', (t) => {
   const home = process.env.HOME;
   try {
     delete process.env.HOME;
-    format('SELECT 1', {
+    format("SELECT 1", {
       noRcFile: true,
     });
     t.pass();
@@ -161,10 +159,16 @@ test('{noRcFile: true}', (t) => {
   }
 });
 
-test('{commaBreak: true}', (t) => {
-  const result = format('INSERT INTO shoes(type, color, price) VALUES ("sneaker", "white", 99)', {
-    commaBreak: true,
-  });
+test("{commaBreak: true}", (t) => {
+  const result = format(
+    'INSERT INTO shoes(type, color, price) VALUES ("sneaker", "white", 99)',
+    {
+      commaBreak: true,
+    }
+  );
 
-  t.is(result, 'INSERT INTO shoes (\n    type,\n    color,\n    price)\nVALUES (\n    "sneaker",\n    "white",\n    99)\n');
+  t.is(
+    result,
+    'INSERT INTO shoes (\n    type,\n    color,\n    price)\nVALUES (\n    "sneaker",\n    "white",\n    99)\n'
+  );
 });
