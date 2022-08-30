@@ -3,7 +3,6 @@ dist
 node_modules
 src/pg-formatter
 *.log
-.*
 !.babelrc
 !.editorconfig
 !.eslintignore
