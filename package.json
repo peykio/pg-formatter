@@ -32,15 +32,17 @@
     "@babel/plugin-transform-flow-strip-types": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
+    "@octokit/core": "^4.0.5",
     "ava": "^2.4.0",
     "babel-plugin-istanbul": "^5.2.0",
     "coveralls": "^3.0.7",
-    "eslint": "^6.8.0",
+    "eslint": "^7.32.0",
     "eslint-config-canonical": "^19.0.0",
     "flow-bin": "^0.111.1",
     "husky": "^3.0.9",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.30"
+    "semantic-release": "^15.13.30",
+    "typescript": "^4.8.2"
   },
   "engines": {
     "node": ">=10.0"
@@ -52,7 +54,7 @@
     "sql"
   ],
   "main": "./dist/index.js",
-  "name": "pg-formatter",
+  "name": "@peykio/pg-formatter",
   "nyc": {
     "include": [
       "src/**/*.js"
