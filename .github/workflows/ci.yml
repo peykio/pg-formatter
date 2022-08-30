@@ -25,8 +25,8 @@ jobs:
 
       - run: pnpm build-pg-formatter
 
+      - run: pnpm build
+
       - run: pnpm lint
 
       - run: pnpm test
-
-      - run: pnpm build
