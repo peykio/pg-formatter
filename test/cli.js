@@ -1,18 +1,18 @@
-const test = require("ava");
-const { spawnSync } = require("child_process");
-const { join } = require("path");
+import {spawnSync} from 'child_process';
+import {join} from 'path';
+import test from 'ava';
 
-function runPgFormatter(...args: string[]) {
-  const result = spawnSync("node", ["dist/bin/index.js", ...args], {
+const runPgFormatter = (...args) => {
+  const result = spawnSync('node', ['dist/bin/index.js', ...args], {
     cwd: process.cwd(),
-    stdio: "pipe",
+    stdio: 'pipe',
   });
-  return result.stdout.toString();
-}
 
-test("a regular .sql file", (t) => {
-  const result = runPgFormatter(join(__dirname, "__fixtures__", "one.sql"));
-  console.debug(result);
+  return result.stdout.toString();
+};
+
+test('a regular .sql file', (t) => {
+  const result = runPgFormatter(join(__dirname, '__fixtures__', 'one.sql'));
   t.is(
     result,
     `SELECT
@@ -20,17 +20,17 @@ test("a regular .sql file", (t) => {
 FROM
     movies;
 
-`
+`,
   );
 });
 
-test("an ignored .sql file", (t) => {
-  const result = runPgFormatter(join(__dirname, "__fixtures__", "two.sql"));
-  t.is(result, "");
+test('an ignored .sql file', (t) => {
+  const result = runPgFormatter(join(__dirname, '__fixtures__', 'two.sql'));
+  t.is(result, '');
 });
 
-test("all .sql files", (t) => {
-  const result = runPgFormatter(join(__dirname, "__fixtures__", "*.sql"));
+test('all .sql files', (t) => {
+  const result = runPgFormatter(join(__dirname, '__fixtures__', '*.sql'));
   t.is(
     result,
     `SELECT
@@ -38,6 +38,6 @@ test("all .sql files", (t) => {
 FROM
     movies;
 
-`
+`,
   );
 });

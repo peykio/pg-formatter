@@ -78,7 +78,7 @@
   "scripts": {
     "build": "rm -fr ./dist && babel ./src --out-dir ./dist --copy-files --source-maps",
     "build-pg-formatter": "rm -fr ./src/pg-formatter && mkdir -p ./src/pg-formatter && curl -LkSs https://github.com/darold/pgFormatter/archive/refs/tags/v5.3.tar.gz | tar xz --strip-components=1 -C ./src/pg-formatter",
-    "lint": "eslint ./src ./test && flow",
+    "lint": "eslint ./src ./test --fix && flow",
     "test": "ava --serial --verbose"
   },
   "version": "1.1.1",
